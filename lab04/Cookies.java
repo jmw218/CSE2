@@ -67,12 +67,12 @@ public class Cookies {
         
         if(buyCookies >= (peopleThere * cookiesEach))
         {
-            if((buyCookies % peopleThere) > 0)
+            if((buyCookies % peopleThere) > 0) //checks if there will be a remainder of 0 cookies afterwards
             {
-                System.out.println("You have enough, but it won't be evenly divided.");
+                System.out.println("You have enough, but it won't be evenly divided.");  //if there are leftover cookies from remainder check, explains that it won't be divided evenly.
             }
             else{
-                System.out.println("You have enough and they will be divided evenly.");
+                System.out.println("You have enough and they will be divided evenly.");  //else explains it will be divided evenly.
             }
         }                                                               
         else{ 
