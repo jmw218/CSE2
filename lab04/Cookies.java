@@ -67,10 +67,16 @@ public class Cookies {
         
         if(buyCookies >= (peopleThere * cookiesEach))
         {
-            System.out.println("There are enough cookies for everyone.");  //if the amount of cookies bought is greater than or equal
-        }                                                               //to the cookies that will be eaten (people * cookies each), then print that there are enough
+            if((buyCookies % peopleThere) > 0)
+            {
+                System.out.println("You have enough, but it won't be evenly divided.");
+            }
+            else{
+                System.out.println("You have enough and they will be divided evenly.");
+            }
+        }                                                               
         else{ 
-            System.out.println("There are not enough cookies for everyone.");  //else print there aren't enough
+            System.out.println("There are not enough cookies for everyone, you need " + ((peopleThere * cookiesEach) - buyCookies) + " more.");  //else print there aren't enough and how many more are needed
         }
     }
 }
