@@ -33,7 +33,7 @@ public class SmileGenerator
         
         //Step 2 - A second loop which prints out smiley faces, but this time a random amount between 1 and 100.
         
-        int smileRandom = (int)(Math.random() * 99) + 1; //will generate a number from 1 to 100
+        int smileRandom = (int)(Math.random() * 100) + 1; //will generate a number from 1 to 100
         System.out.println("Now printing " + smileRandom + " smileys.");
         int smileStopper = 0; //variable for while loop
         while(smileStopper < smileRandom) //checks that the smile stopper variable is less than random number
@@ -45,7 +45,7 @@ public class SmileGenerator
         
         //Step 3 - Do the same, but this time make a new line after every 30 smiley faces.
         
-        int thirtySmileRandom = (int)(Math.random() * 99) + 1; //randomly generated number from 1 to 100
+        int thirtySmileRandom = (int)(Math.random() * 100) + 1; //randomly generated number from 1 to 100
         System.out.println("Now printing " + thirtySmileRandom + " smileys.");
         int thirtySmileStopper = 0; //variable to stop the while loop
         while(thirtySmileStopper < thirtySmileRandom) //makes sure that the variable is less than the randomized number
@@ -61,7 +61,7 @@ public class SmileGenerator
         
         //Step 4 - Make it so that the line has an increasing amount of smileys on it by 1.
         
-        int pyramidRandom = (int)(Math.random() * 99) + 1; //Creates number from 1 to 100 at random
+        int pyramidRandom = (int)(Math.random() * 100) + 1; //Creates number from 1 to 100 at random
         System.out.println("Now printing " + pyramidRandom + " smileys.");
         int pyramidStopper = 0; //Will stop the loop at some point
         int pyramidMaker = 1;  //variable for creating staircase or pyramid shape
