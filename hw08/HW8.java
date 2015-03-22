@@ -119,7 +119,7 @@ public static void giant()
                 return string;
             }
             else{
-                System.out.println(trial + " more hits until the troll is dead. Choose between 'A' 'a' 'e' or 'E' again.");  //if it isn't dead yet, tells you how many more hits, and repeats getInput
+                System.out.println(trial + " more hits until the troll is killed. Choose between 'A' 'a' 'e' or 'E' again.");  //if it isn't dead yet, tells you how many more hits, and repeats getInput
                 getInput(scan, string, trial);
             }
         }
