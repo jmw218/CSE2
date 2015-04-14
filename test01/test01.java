@@ -4,13 +4,13 @@ public class test01
 {
     public static void main(String[] args)
     {
-        int[] array1 = new int[200];
+        int[] array1 = new int[20];
         for(int i = 0; i < array1.length; i++)
         {
-            array1[i] = i;
+            array1[i] = 2*i;
         }
         printArray(array1);
-        for(int k = 0; k < array1.length; k++)
+        for(int k = 0; k < 2*array1.length; k++)
         {
             binarySearch(array1, k);
         }
