@@ -8,68 +8,165 @@ public class MatrixMethods
 {
     public static void main(String[] args)
     {
-        int[][] matr1 = increasingMatrix(3, 4, false);
-        printMatrix(matr1, false);
+        int widthOne = (int)(Math.random()*10) + 1;
+        int heightOne = (int)(Math.random()*10) + 1;
+        int widthTwo = (int)(Math.random()*10) + 1;
+        int heightTwo = (int)(Math.random()*10) + 1;
         
-        int[][] matr2 = translate(matr1);
-        printMatrix(matr2, true);
+        System.out.println("Matrix A (row format): ");
+        int[][] exArray1 = increasingMatrix(widthOne, heightOne, true);
+        printMatrix(exArray1, true);
+        
+        System.out.println();
+        System.out.println("Matrix B (column format): ");
+        int[][] exArray2 = increasingMatrix(widthOne, heightOne, false);
+        printMatrix(exArray2, false);
+        
+        System.out.println();
+        System.out.println("Matrix C (row format): ");
+        int[][] exArray3 = increasingMatrix(widthTwo, heightTwo, true);
+        printMatrix(exArray3, true);
+        
+        System.out.println();
+        System.out.println("Adding A and B matrices: ");
+        int[][] exArray4 = addMatrix(exArray1, true, exArray2, false);
+        printMatrix(exArray4, true);
+        
+        System.out.println();
+        System.out.println("Adding A and C matrices: ");
+        int[][] exArray5 = addMatrix(exArray1, true, exArray3, true);
+        printMatrix(exArray5, true);
     }
+    
     public static int[][] increasingMatrix(int width, int height, boolean format)
     {
-        int[][] incMat = new int[height][width];
-        if(format)
+        int[][] incMat = new int[0][0];
+        int counter = 1;
+        if(width > 0 && height > 0)
         {
-            for(int i = 0; i < incMat.length; i++)
+            if(format)
             {
-                for(int k = 0; k < incMat[i].length; k++)
+                incMat = new int[height][width];
+                for(int i = 0; i < height; i++)
                 {
-                    incMat[i][k] = (i*3) + k + 1;
+                    for(int k = 0; k < width; k++)
+                    {
+                        incMat[i][k] = counter;
+                        counter++;
+                    }
                 }
             }
-        }
-        else{
-            for(int i = 0; i < incMat.length; i++)
-            {
-                for(int k = 0; k < incMat[i].length; k++)
+            else{
+                incMat = new int[width][height];
+                for(int i = 0; i < height; i++)
                 {
-                    incMat[i][k] = i + (k*3) + 1;
+                    for(int k = 0; k < width; k++)
+                    {
+                        incMat[k][i] = counter;
+                        counter++;
+                    }
                 }
-            }
-        }
-        return incMat;
-    }
-    public static void printMatrix(int[][] array, boolean format)
-    {
-        if(array != null)
-        {
-            System.out.println();
-            for(int q = 0; q < array.length; q++)
-            {
-                System.out.println();
-                System.out.print("[ ");
-                for(int r = 0; r < array[q].length; r++)
-                {
-                    System.out.print(array[q][r] + " ");
-                }
-                System.out.print("]");
             }
         }
         else
         {
-            System.out.println("The array was empty.");
+            System.out.println("The width and height are incompatible numbers for making an array.");
+        }
+        return incMat;
+    }
+    
+    public static void printMatrix(int[][] array, boolean format)
+    {
+        if(array != null)
+        {
+            if(format)
+            {
+                for(int i = 0; i < array.length; i++)
+                {
+                    System.out.println();
+                    System.out.print("{ ");
+                    for(int k = 0; k < array[i].length; k++)
+                    {
+                        System.out.print( array[i][k] + ", ");
+                    }
+                    System.out.print("" + '\b' + '\b' + " }");
+                }
+                System.out.println();
+            }
+            else{
+                for(int i = 0; i < array[0].length; i++)
+                {
+                    System.out.println();
+                    System.out.print("{ ");
+                    for(int k = 0; k < array.length; k++)
+                    {
+                        System.out.print( array[k][i] + ", ");
+                    }
+                    System.out.print("" + '\b' + '\b' + " }");
+                }
+                System.out.println();
+            }
+        }
+        else
+        {
+            System.out.println("The array was null.");
         }
     }
+    
     public static int[][] translate(int[][] array)
     {
-        int[][] newArray = new int[array.length][array[0].length];
-        //int[][] newArray = new int[array[0].length][array.length];
-        for(int z = 0; z < array.length; z++)
+        int[][] newArray = new int[array[0].length][array.length];
+        
+        for(int i = 0; i < newArray.length; i++)
         {
-            for(int l = 0; l < array[z].length; l++)
+            for(int k = 0; k < newArray[i].length; k++)
             {
-                array[l][z] = array[z][l];
+                newArray[i][k] = array[k][i];
             }
         }
         return newArray;
+    }
+    
+    public static int[][] addMatrix(int[][] a, boolean formata, int[][] b, boolean formatb)
+    {
+        int[][] aArr = new int[0][0];
+        int[][] bArr = new int[0][0];
+        int[][] abArr = new int[0][0];
+        if(formata)
+        {
+            aArr = new int[a.length][a[0].length];
+            abArr = new int[a.length][a[0].length];
+            aArr = a;
+        }
+        else{
+            aArr = new int[a[0].length][a.length];
+            aArr = translate(a);
+            abArr = new int[a[0].length][a.length];
+        }
+        if(formatb)
+        {
+            bArr = new int[b.length][b[0].length];
+            bArr = b;
+        }
+        else{
+            bArr = new int[b[0].length][b.length];
+            bArr = translate(b);
+        }
+        
+        if(aArr.length == bArr.length && aArr[0].length == bArr[0].length)
+        {
+            for(int i = 0; i < aArr.length; i++)
+            {
+                for(int k = 0; k < aArr[i].length; k++)
+                {
+                    abArr[i][k] = aArr[i][k] + bArr[i][k];
+                }
+            }
+        }
+        else{
+            System.out.println("Unfortunately the two arrays cannot be added.");
+            abArr = null;
+        }
+        return abArr;
     }
 }
