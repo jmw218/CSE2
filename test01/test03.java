@@ -5,30 +5,53 @@ public class test03
 {
     public static void main(String[] args)
     {
-        int[][] ROFLFUCK = new int[3][4];
-        int height = ROFLFUCK.length;
-        for(int row = 0; row < height; row ++)
+        int[] tester = new int[10];
+        for(int i = 0; i < tester.length; i++)
         {
-            int width = ROFLFUCK[ row ].length;
-            for(int col = 0; col < width; col ++)
+            tester[i] = i + 1;
+        }
+        
+        for(int i = -10; i <= tester.length+10; i++)
+        {
+            binarySearch(tester, i);
+        }
+    }
+    public static void binarySearch(int[] array, int find)
+    {
+        boolean cont = true;
+        boolean found = true;
+        int mid = 0;
+        int low = 0;
+        int high = array.length;
+        
+        while(cont)
+        {
+            mid = (low + high)/2;
+            
+            if(mid == low || mid == high)
             {
-                ROFLFUCK[ row ][ col ] = col + (2 * row );
+                cont = false;
+            }
+            
+            if(array[mid] == find)
+            {
+                cont = false;
+                found = false;
+                System.out.println(find + " was found within the array.");
+            }
+            else{
+                if(array[mid] > find)
+                {
+                    high = mid;
+                }
+                else{
+                    low = mid;
+                }
             }
         }
-        System.out.println(height);
-        printMatrix(ROFLFUCK);
-    }
-    public static void printMatrix(int[][] listList)
-    {
-        for(int row = 0; row < listList.length; row ++)
+        if(found)
         {
-            System.out.println();
-            System.out.print("{ ");
-            for(int col = 0; col < listList[ row ].length; col ++)
-            {
-                System.out.print( listList[ row ][ col ] + ", ");
-            }
-            System.out.print("" + '\b' + '\b' + " }");
+            System.out.println(find + " was not found within the array.");
         }
     }
 }
