@@ -12,10 +12,10 @@ public class FourDwin
     public static void main(String[] args)
     {
         System.out.println("Please enter the first parameter of the random array lengths.");
-        int X = getInput(0);
+        int X = getInput(0); //method made to get input and continuously try until the user enters it correctly.  The entry into this method is the minimum value.
         System.out.println("Please enter the second parameter of the random array lengths.");
-        int Y = getInput(X);
-        int YandX = Y-X;
+        int Y = getInput(X); //sets value of X to the minimum Y can be chosen as.
+        int YandX = Y-X;  //necessary for the randomized element later.  Makes it random from 0 to Y-X.
         
         int fourD = 3;
         int threeD = (int)(Math.random() * YandX) + X;
@@ -28,10 +28,10 @@ public class FourDwin
         
         for(int i = 0; i <fourD; i++)
         {
-            fourDArray[i] = new double[(int)(Math.random() * YandX) + X][];  //goes through and sets random lengths to 2nd position
+            fourDArray[i] = new double[(int)(Math.random() * YandX) + X][];  //goes through and sets random length from X to Y
             for(int k = 0; k < fourDArray[i].length; k++)
             {
-                fourDArray[i][k] = new double[(int)(Math.random() * YandX) + X];  //sets random lengths to final position
+                fourDArray[i][k] = new double[(int)(Math.random() * YandX) + X];  //sets random lengths to final position from X to Y
             }
         }
         
@@ -42,16 +42,16 @@ public class FourDwin
                 for(int j = 0; j < fourDArray[i][k].length; j++)
                 {
                     decI = (int)(Math.random() * 300);  //sets every value to a number from 0 to 300
-                    decD = ((double)decI) / 10;  //then makes it a double of that divided by 10.
+                    decD = ((double)decI) / 10;  //then makes it a double of that divided by 10.  Ex: 298 becomes 29.8
                     fourDArray[i][k][j] = decD;
                     
                 }
             }
         }
         
-        printArray(fourDArray);
+        printArray(fourDArray); //prints, gets stats, sorts it, and then prints the final results.
         statArray(fourDArray);
-        sort3DArray(fourDArray);
+        sort4DArray(fourDArray);
         printArray(fourDArray);
     }
     
@@ -59,7 +59,7 @@ public class FourDwin
     {
         int userInput = 0;
         boolean checker = true;
-        while(checker)
+        while(checker)  //keeps going until user correctly enters
         {
             Scanner userScan = new Scanner(System.in);
             if(userScan.hasNextInt())
@@ -67,7 +67,7 @@ public class FourDwin
                 userInput = userScan.nextInt();
                 if(userInput > min)
                 {
-                    checker = false;
+                    checker = false;  //causes loop to end and to return input
                 }
                 else{
                     System.out.println("The value you entered is not greater than the minimum of " + min + ".");
@@ -123,103 +123,104 @@ public class FourDwin
         System.out.println("Mean: " + arrayMean);
     }
     
-    public static void sort3DArray(double[][][] list)  //attempts to sort the array
+    public static void sort4DArray(double[][][] list)  //attempts to sort the array
     {
         
         double[][] holder;
         double [] holderTwo;
         double holderThree;
         
+        int counter = 0;
+        int prevCount = 0;
+        int curI = 0;
+        int curK = 0;
+        int prevI = 0;
+        int prevK = 0;
+        double minNum = 1000;  //used while finding min number in each 3D array
+        double prevMin = 0;  //the previous minimum
         
-
-        
-        for(int i = 0; i < list.length; i++)  //this sorts each individual number in the 2D arrays so that they are in order
+        for(int i = 0; i < list.length; i++)
         {
             for(int k = 0; k < list[i].length; k++)
             {
                 for(int j = 0; j < list[i][k].length; j++)
                 {
-                    if(j+1 < list[i][k].length)
+                    counter++;
+                    if(list[i][k][j] < minNum)
                     {
-                        while(j >= 0 && list[i][k][j+1] < list[i][k][j])
-                        {
-                            holderThree = list[i][k][j];
-                            list[i][k][j] = list[i][k][j+1];
-                            list[i][k][j+1] = holderThree;
-                            if(j != 0)
-                            {
-                                j--;
-                            }
-                        }
+                        minNum = list[i][k][j];  //this continuously gets the min number for each 3Darray
+                    }
+                }
+                
+            }
+            curI = i;
+            
+            if(prevCount > counter)
+            {
+                holder = list[curI];
+                list[curI] = list[prevI];  //swaps values if the number of members in a previous spot is higher.
+                list[prevI] = holder;
+                
+                
+                i = -1;  //resets i to -1 so it does another full cycle to prevent misses.
+            }
+            else{
+                if(prevCount == counter) //it checks if the two are equal.
+                {
+                    if(prevMin > minNum)
+                    {
+                        holder = list[curI];
+                        list[curI] = list[prevI];  //if so, it checks which has the lower min and then swaps them if necessary
+                        list[prevI] = holder;
+                        
+                        
+                        i = -1;  //resets to 0 so it can re-check everything.
                     }
                 }
             }
+            
+            
+            prevCount = counter;  //sets the previouses' before repeat of loop
+            prevMin = minNum;
+            
+            counter = 0; //resets the counters
+            minNum = 1000;
+            prevI = curI;
+            
         }
         
+        sort3DArray(list);
         
-        for(int i = 0; i < list.length; i++)  //this sorts the 3D arrays so that each array in the array of the array is correctly ordered by length
+    }
+    
+    public static void sort3DArray(double[][][] list)
+    {
+        double holder;
+        int curJ;
+        int lowJ;
+        int lower;
+        boolean stopper = true;
+        
+        for(int i = 0; i < list.length; i++)
         {
             for(int k = 0; k < list[i].length; k++)
             {
-                if(k+1 < list[i].length)
+                for(int j = 0; j < list[i][k].length; j++)
                 {
-                    if(list[i][k+1].length == list[i][k].length)  //if equal it sets it up so the smallest value one goes first in the order
+                    curJ = j;
+                    lowJ = j;
+                    lower = j;
+                    while(lowJ < list[i][k].length)  //goes through every value above the current one and checks if it is lower.
                     {
-                        while(k >= 0 && list[i][k+1][0] < list[i][k][0])
+                        if(list[i][k][lowJ] < list[i][k][curJ] && list[i][k][lowJ] < list[i][k][lower])  //if it is lower, sets it to the lowest value
                         {
-                            holderTwo = list[i][k];
-                            list[i][k] = list[i][k+1];
-                            list[i][k+1] = holderTwo;
-                            if(k != 0)
-                            {
-                                k--;
-                            }
+                            lower = lowJ;
                         }
+                        lowJ++;
                     }
-                    while(k >= 0 && list[i][k+1].length < list[i][k].length)  //puts it over if length of another is larger
-                    {
-                        holderTwo = list[i][k];
-                        list[i][k] = list[i][k+1];
-                        list[i][k+1] = holderTwo;
-                        if(k != 0)
-                        {
-                            k--;
-                        }
-                    }
-                }
-            }
-        }
-        
-        for(int i = 0; i < list.length; i++)  //an attempt to order it 4D wise.  Was unable to figure out how to get it to work. unfortunately does not order the way it is supposed to, but doesn't have any effect it seems.
-        {
-            if(i+1 < list.length)
-            {
-                if(list[i].length == list[i+1].length)
-                {
-                    for(int k = 0; k < list[i].length - 1; k++)
-                    {
-                        while(k >= 0 && list[i][k+1][0] < list[i][k][0])
-                        {
-                            holder = list[i];
-                            list[i] = list[i+1];
-                            list[i+1] = holder;
-                            if(i != 0)
-                            {
-                                i--;
-                            }
-                        }
-                    }
-                }
-                while(i >= 0 && list[i+1].length < list[i].length)
-                {
-                    
-                    holder = list[i];
-                    list[i] = list[i+1];
-                    list[i+1] = holder;
-                    if(i != 0)
-                    {
-                        i--;
-                    }
+                    holder = list[i][k][curJ];  //swaps the current value with the lowest one.
+                    list[i][k][curJ] = list[i][k][lower];
+                    list[i][k][lower] = holder;
                 }
             }
         }
